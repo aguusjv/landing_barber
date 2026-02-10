@@ -13,7 +13,6 @@ const NAV_LINKS: NavLink[] = [
   { name: 'Inicio', href: '#inicio' },
   { name: 'Historia', href: '#historia' },
   { name: 'Servicios', href: '#servicios' },
-  { name: 'Asesor IA', href: '#asesor' },
   { name: 'Prensa', href: '#prensa' },
   { name: 'Locales', href: '#locales' },
 ];
