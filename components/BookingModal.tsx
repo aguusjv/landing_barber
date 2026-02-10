@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { BookingData } from '../types';
 
 interface BookingModalProps {
@@ -7,21 +6,68 @@ interface BookingModalProps {
   onClose: () => void;
 }
 
+// Horario de atención (coincide con tu texto "Lun - Sáb 10:00 - 20:00")
+const OPEN_TIME = '10:00';
+const CLOSE_TIME = '20:00';
+const SLOT_MINUTES = 40;
+
+function toMinutes(hhmm: string) {
+  const [h, m] = hhmm.split(':').map(Number);
+  return h * 60 + m;
+}
+
+function toHHMM(totalMinutes: number) {
+  const h = Math.floor(totalMinutes / 60);
+  const m = totalMinutes % 60;
+  const hh = String(h).padStart(2, '0');
+  const mm = String(m).padStart(2, '0');
+  return `${hh}:${mm}`;
+}
+
+/**
+ * Genera turnos desde OPEN_TIME hasta CLOSE_TIME,
+ * en saltos de SLOT_MINUTES.
+ * Nota: el último turno empieza antes de CLOSE_TIME.
+ */
+function generateTimeSlots(open: string, close: string, stepMin: number) {
+  const start = toMinutes(open);
+  const end = toMinutes(close);
+
+  const slots: string[] = [];
+  for (let t = start; t < end; t += stepMin) {
+    slots.push(toHHMM(t));
+  }
+  return slots;
+}
+
 const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
+  const timeSlots = useMemo(
+    () => generateTimeSlots(OPEN_TIME, CLOSE_TIME, SLOT_MINUTES),
+    []
+  );
+
   const [formData, setFormData] = useState<BookingData>({
     name: '',
     phone: '',
     service: 'Corte Clásico',
     date: '',
-    time: '10:00',
-    location: 'Palermo Hollywood'
+    time: timeSlots[0] ?? '10:00',
+    location: 'Palermo Hollywood',
   });
+
+  // Si cambia la configuración y el time actual no existe, lo corregimos
+  useEffect(() => {
+    if (!timeSlots.includes(formData.time)) {
+      setFormData((prev) => ({ ...prev, time: timeSlots[0] ?? '10:00' }));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeSlots]);
 
   if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const message = `Hola Buenos Aires Barbershop! Me gustaría reservar un turno:
 - Nombre: ${formData.name}
 - Servicio: ${formData.service}
@@ -32,30 +78,24 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
 
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/5491112345678?text=${encodedMessage}`; // Número de ejemplo
-    
+
     window.open(whatsappUrl, '_blank');
     onClose();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       {/* Overlay */}
-      <div 
-        className="absolute inset-0 bg-black/90 backdrop-blur-sm"
-        onClick={onClose}
-      ></div>
-      
+      <div className="absolute inset-0 bg-black/90 backdrop-blur-sm" onClick={onClose}></div>
+
       {/* Modal Content */}
       <div className="relative bg-[#0c0c0c] border border-gold/30 w-full max-w-2xl overflow-hidden shadow-2xl animate-fadeIn">
-        <button 
-          onClick={onClose}
-          className="absolute top-4 right-4 text-gold hover:text-white transition z-10"
-        >
+        <button onClick={onClose} className="absolute top-4 right-4 text-gold hover:text-white transition z-10">
           <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -70,14 +110,22 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
               Selecciona el horario y servicio que prefieras. Un barbero te estará esperando puntualmente para brindarte la mejor atención.
             </p>
             <div className="space-y-4">
-                <div className="flex items-center space-x-3 opacity-60">
-                    <span className="text-gold text-lg">📍</span>
-                    <span className="text-[10px] uppercase tracking-widest">Palermo & San Telmo</span>
-                </div>
-                <div className="flex items-center space-x-3 opacity-60">
-                    <span className="text-gold text-lg">🕒</span>
-                    <span className="text-[10px] uppercase tracking-widest">Lun - Sáb 10:00 - 20:00</span>
-                </div>
+              <div className="flex items-center space-x-3 opacity-60">
+                <span className="text-gold text-lg">📍</span>
+                <span className="text-[10px] uppercase tracking-widest">Palermo & San Telmo</span>
+              </div>
+              <div className="flex items-center space-x-3 opacity-60">
+                <span className="text-gold text-lg">🕒</span>
+                <span className="text-[10px] uppercase tracking-widest">
+                  Lun - Sáb {OPEN_TIME} - {CLOSE_TIME}
+                </span>
+              </div>
+              <div className="flex items-center space-x-3 opacity-60">
+                <span className="text-gold text-lg">⏱️</span>
+                <span className="text-[10px] uppercase tracking-widest">
+                  Turnos cada {SLOT_MINUTES} min
+                </span>
+              </div>
             </div>
           </div>
 
@@ -86,9 +134,9 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-1">
                 <label className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-500">Nombre Completo</label>
-                <input 
+                <input
                   required
-                  type="text" 
+                  type="text"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
@@ -100,9 +148,9 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-500">Teléfono</label>
-                  <input 
+                  <input
                     required
-                    type="tel" 
+                    type="tel"
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
@@ -110,9 +158,10 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                     className="w-full bg-black border-b border-white/10 p-3 focus:border-gold outline-none transition text-sm"
                   />
                 </div>
+
                 <div className="space-y-1">
                   <label className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-500">Local</label>
-                  <select 
+                  <select
                     name="location"
                     value={formData.location}
                     onChange={handleChange}
@@ -126,7 +175,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
 
               <div className="space-y-1">
                 <label className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-500">Servicio</label>
-                <select 
+                <select
                   name="service"
                   value={formData.service}
                   onChange={handleChange}
@@ -142,29 +191,35 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-500">Fecha</label>
-                  <input 
+                  <input
                     required
-                    type="date" 
+                    type="date"
                     name="date"
                     value={formData.date}
                     onChange={handleChange}
                     className="w-full bg-black border-b border-white/10 p-3 focus:border-gold outline-none transition text-sm"
                   />
                 </div>
+
                 <div className="space-y-1">
                   <label className="text-[9px] uppercase tracking-[0.2em] font-bold text-gray-500">Hora</label>
-                  <input 
+                  <select
                     required
-                    type="time" 
                     name="time"
                     value={formData.time}
                     onChange={handleChange}
-                    className="w-full bg-black border-b border-white/10 p-3 focus:border-gold outline-none transition text-sm"
-                  />
+                    className="w-full bg-black border-b border-white/10 p-3 focus:border-gold outline-none transition text-sm appearance-none"
+                  >
+                    {timeSlots.map((t) => (
+                      <option key={t} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
-              <button 
+              <button
                 type="submit"
                 className="w-full bg-gold text-black font-bold py-4 uppercase tracking-[0.2em] text-[10px] hover:bg-amber-400 transition transform active:scale-95 shadow-lg shadow-gold/10"
               >
