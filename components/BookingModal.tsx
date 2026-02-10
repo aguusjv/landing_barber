@@ -77,7 +77,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
 - Tel: ${formData.phone}`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/5491112345678?text=${encodedMessage}`; // Número de ejemplo
+    const whatsappUrl = `https://wa.me/5492932547307?text=${encodedMessage}`; // Número de ejemplo
 
     window.open(whatsappUrl, '_blank');
     onClose();

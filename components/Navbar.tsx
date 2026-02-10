@@ -67,8 +67,8 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenBooking }) => {
         className={`fixed top-0 left-0 w-full z-[60] transition-all duration-500 ${
           isScrolled || isMobileMenuOpen
             ? 'bg-black/95 py-3 border-b border-gold/20'
-            : 'bg-transparent py-8'
-        }`}
+            : 'bg-transparent py-4 md:py-8'
+          }`}
       >
         <div className="container mx-auto px-6 flex justify-between items-center">
           {/* Logo */}

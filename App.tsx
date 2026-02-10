@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import PressSection from './components/PressSection';
-import IAAdvisor from './components/IAAdvisor';
 import BookingModal from './components/BookingModal';
 
 const App: React.FC = () => {
@@ -17,18 +16,18 @@ const App: React.FC = () => {
       <BookingModal isOpen={isBookingOpen} onClose={closeBooking} />
 
       {/* Hero Section */}
-      <section id="inicio" className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section id="inicio" className="relative min-h-screen flex items-start md:items-center justify-center overflow-hidden pt-28 md:pt-0">
         <div className="absolute inset-0 z-0">
-          <img
+          {/* <img
             src="https://images.unsplash.com/photo-1512690196252-75820320707c?auto=format&fit=crop&q=80&w=1920"
             className="w-full h-full object-cover opacity-30"
             alt="Barbershop Background"
-          />
+          /> */}
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/80 to-[#0c0c0c]"></div>
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl">
-          <div className="flex justify-center mb-8 opacity-80 animate-fadeIn">
+          <div className="flex justify-center mb-1 opacity-80 animate-fadeIn">
             <div className="w-12 h-px bg-gold self-center"></div>
             <span className="mx-4 text-gold tracking-[0.5em] text-[10px] uppercase font-bold">
               Est. 1994
@@ -69,33 +68,41 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center">
-          <span className="text-[10px] uppercase tracking-[0.4em] text-gray-500 mb-4">
-            Scroll Down
-          </span>
-          <div className="w-px h-12 bg-gradient-to-b from-gold/50 to-transparent"></div>
-        </div>
       </section>
 
       {/* Historia */}
-      <section id="historia" className="py-32 container mx-auto px-6 text-center">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-10 serif italic">Mucho más que un corte.</h2>
-          <p className="text-gray-500 text-lg leading-loose font-light">
-            Buenos Aires Barbershop nace de la pasión por los oficios perdidos. En un mundo que se mueve
-            cada vez más rápido, nosotros elegimos la pausa. El ritual de la toalla caliente, el sonido
-            de la navaja sobre el cuero y la charla cómplice. Somos herederos de una tradición que
-            honramos en cada movimiento.
-          </p>
-          <div className="mt-12 flex justify-center">
-            <img
-              src="https://buenosairesbarbershop.com/img/brand/signature.png"
-              alt="Signature"
-              className="h-16 opacity-30 invert"
-            />
-          </div>
-        </div>
-      </section>
+      <section id="historia" className="py-32 container mx-auto px-6">
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    {/* Imagen */}
+    <div className="relative">
+      <div className="absolute -inset-4 border border-gold/20 pointer-events-none"></div>
+      <img
+        src="https://images.unsplash.com/photo-1519500528352-2d1460418d41"
+        alt="Barbería clásica"
+        className="w-full h-[420px] object-cover border border-white/10"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+    </div>
+
+    {/* Texto */}
+    <div className="text-center lg:text-left max-w-xl mx-auto lg:mx-0">
+      <h2 className="text-3xl md:text-4xl font-bold mb-10 serif italic">
+        Mucho más que un corte.
+      </h2>
+      <p className="text-gray-500 text-lg leading-loose font-light">
+        Buenos Aires Barbershop nace de la pasión por los oficios perdidos. En un mundo que se mueve
+        cada vez más rápido, nosotros elegimos la pausa. El ritual de la toalla caliente, el sonido
+        de la navaja sobre el cuero y la charla cómplice. Somos herederos de una tradición que
+        honramos en cada movimiento.
+      </p>
+
+      <div className="mt-10 flex justify-center lg:justify-start">
+        <div className="h-px w-20 bg-gold/40"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Servicios */}
       <section id="servicios" className="py-24 bg-stone-900/20">
@@ -110,12 +117,12 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-1">
             <div className="bg-black p-12 border border-white/5 hover:border-gold/30 transition group relative overflow-hidden">
               <div className="relative z-10">
-                <span className="text-gold/50 text-sm font-bold mb-4 block">01</span>
+                {/* <span className="text-gold/50 text-sm font-bold mb-4 block">01</span> */}
                 <h3 className="text-2xl mb-4 serif uppercase tracking-widest">Corte Clásico</h3>
                 <p className="text-gray-500 text-sm leading-relaxed mb-6">
                   Técnica manual a tijera y peine, finalizado con navaja en contornos.
                 </p>
-                <div className="text-gold font-bold">$4.500</div>
+               {/* <div className="text-gold font-bold">$4.500</div> */}
               </div>
               <div className="absolute -bottom-10 -right-10 text-9xl opacity-[0.02] group-hover:opacity-[0.05] transition duration-500">
                 ✂️
@@ -124,12 +131,12 @@ const App: React.FC = () => {
 
             <div className="bg-black p-12 border border-white/5 hover:border-gold/30 transition group relative overflow-hidden">
               <div className="relative z-10">
-                <span className="text-gold/50 text-sm font-bold mb-4 block">02</span>
+                {/* <span className="text-gold/50 text-sm font-bold mb-4 block">02</span> */}
                 <h3 className="text-2xl mb-4 serif uppercase tracking-widest">Barba Tradicional</h3>
                 <p className="text-gray-500 text-sm leading-relaxed mb-6">
                   Ritual de toallas calientes, aceites esenciales y afeitado a navaja.
                 </p>
-                <div className="text-gold font-bold">$3.200</div>
+                {/* <div className="text-gold font-bold">$3.200</div> */}
               </div>
               <div className="absolute -bottom-10 -right-10 text-9xl opacity-[0.02] group-hover:opacity-[0.05] transition duration-500">
                 🪒
@@ -138,12 +145,12 @@ const App: React.FC = () => {
 
             <div className="bg-black p-12 border border-white/5 hover:border-gold/30 transition group relative overflow-hidden">
               <div className="relative z-10">
-                <span className="text-gold/50 text-sm font-bold mb-4 block">03</span>
+                {/* <span className="text-gold/50 text-sm font-bold mb-4 block">03</span> */}
                 <h3 className="text-2xl mb-4 serif uppercase tracking-widest">Combo Maestro</h3>
                 <p className="text-gray-400 text-sm leading-relaxed mb-6">
                   Nuestro servicio insignia: Corte de cabello y cuidado de barba completo.
                 </p>
-                <div className="text-gold font-bold">$6.800</div>
+                {/* <div className="text-gold font-bold">$6.800</div> */}
               </div>
               <div className="absolute -bottom-10 -right-10 text-9xl opacity-[0.02] group-hover:opacity-[0.05] transition duration-500">
                 🏆
@@ -151,11 +158,6 @@ const App: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Asesor IA (necesita id para el navbar) */}
-      <section id="asesor">
-        <IAAdvisor />
       </section>
 
       {/* Prensa (necesita id para el navbar) */}
@@ -239,7 +241,7 @@ const App: React.FC = () => {
 
           <div className="text-center md:text-left text-[10px] text-gray-600 border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between gap-4">
             <p>© 2024 BUENOS AIRES BARBERSHOP. TODOS LOS DERECHOS RESERVADOS.</p>
-            <p className="tracking-widest">DISEÑO & IA POR NÉBULA WEB</p>
+            {/* <p className="tracking-widest">DISEÑO & IA POR NÉBULA WEB</p> */}
           </div>
         </div>
       </footer>
