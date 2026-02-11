@@ -14,7 +14,7 @@ const PRESS_DATA: PressClip[] = [
   {
     id: '2',
     media: 'GQ Magazine',
-    title: 'Por qué Buenos Aires Barbershop es el destino obligado en la ciudad.',
+    title: 'Por qué NOMBRE Barbershop es el destino obligado en la ciudad.',
     date: '15 Sep 2023',
     link: '#',
     imageUrl: 'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=800'

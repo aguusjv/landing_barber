@@ -1,6 +1,6 @@
 
 {
-  "name": "Buenos Aires Barbershop - Tradición y Estilo",
+  "name": "NOMBRE Barbershop - Tradición y Estilo",
   "description": "La barbería más emblemática de Buenos Aires. Cortes clásicos, afeitados tradicionales y asesoramiento con IA.",
   "requestFramePermissions": [
     "camera"

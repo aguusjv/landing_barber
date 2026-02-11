@@ -68,7 +68,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const message = `Hola Buenos Aires Barbershop! Me gustaría reservar un turno:
+    const message = `Hola NOMBRE Barbershop! Me gustaría reservar un turno:
 - Nombre: ${formData.name}
 - Servicio: ${formData.service}
 - Fecha: ${formData.date}

@@ -90,7 +90,7 @@ const App: React.FC = () => {
         Mucho más que un corte.
       </h2>
       <p className="text-gray-500 text-lg leading-loose font-light">
-        Buenos Aires Barbershop nace de la pasión por los oficios perdidos. En un mundo que se mueve
+        "NOMBRE" Barbershop nace de la pasión por los oficios perdidos. En un mundo que se mueve
         cada vez más rápido, nosotros elegimos la pausa. El ritual de la toalla caliente, el sonido
         de la navaja sobre el cuero y la charla cómplice. Somos herederos de una tradición que
         honramos en cada movimiento.
@@ -240,7 +240,7 @@ const App: React.FC = () => {
           </div>
 
           <div className="text-center md:text-left text-[10px] text-gray-600 border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between gap-4">
-            <p>© 2024 BUENOS AIRES BARBERSHOP. TODOS LOS DERECHOS RESERVADOS.</p>
+            <p>© 2024 "NOMBRE" BARBERSHOP. TODOS LOS DERECHOS RESERVADOS.</p>
             {/* <p className="tracking-widest">DISEÑO & IA POR NÉBULA WEB</p> */}
           </div>
         </div>
